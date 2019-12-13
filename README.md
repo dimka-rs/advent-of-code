@@ -1,2 +1,1 @@
-My solutions for advent of code 2018
-https://adventofcode.com
+My solutions for advent of code https://adventofcode.com
