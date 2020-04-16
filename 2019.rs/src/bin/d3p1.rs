@@ -1,4 +1,4 @@
-use std::io::{self, BufReader};
+use std::io::BufReader;
 use std::io::prelude::*;
 use std::fs::File;
 use std::collections::HashMap;
@@ -25,10 +25,8 @@ struct Tile
     y: i32,
 }
 
-fn main() -> io::Result<()>
+fn solve(infile: &str) -> i32
 {
-    let infile: &str = "d3p1.in";
-
     // read file to vectors of strings
     let wire1 = get_wire(&infile, 1);
     let wire2 = get_wire(&infile, 2);
@@ -77,11 +75,17 @@ fn main() -> io::Result<()>
         }
     }
 
-    println!("Answer: x = {}, y = {}, distance = {}.",
-            answer.x, answer.y, answer.val);
     println!("Total points: {}. X range: {} to {}. Y range: {} to {}",
             count, x_min, x_max, y_min, y_max);
-    Ok(())
+    println!("Answer: x = {}, y = {}, distance = {}.",
+            answer.x, answer.y, answer.val);
+
+    answer.val
+}
+
+fn main()
+{
+    solve("d3p1.in");
 }
 
 fn place_wire(grid: &mut HashMap<String, Tile>, wire: &std::vec::Vec<Wire>, weight: i32)
@@ -171,4 +175,24 @@ fn get_wire(file: &str, line_num: u32) -> Vec<std::string::String>
     }
     println!(" {} items", cnt);
     wire
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn tets_input1() {
+        assert_eq!(solve("d3p1.in.test1"), 159);
+    }
+
+    #[test]
+    fn test_input2() {
+        assert_eq!(solve("d3p1.in.test2"), 135);
+    }
+
+    #[test]
+    fn test_task() {
+        assert_eq!(solve("d3p1.in"), 209);
+    }
 }
